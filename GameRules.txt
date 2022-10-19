@@ -1,0 +1,15 @@
+Game is a grid of squares of length x, height y
+Mines are generated on random squares of the grid
+The user clicks on a square to start the game
+	The first square clicked on cannot end the game, so if a bomb is clicked, remove it and move it elsewhere
+Clicking a square either removes the square or sets off a bomb
+A square can be flagged, which prevents it from being clicked 
+If a bomb is clicked the game is over
+	Highlight the bomb that was clicked
+	Show all the bombs remaining in the game
+	Reveal any flags which were not placed on bombs
+A square should show how many adjacent squares contain bombs
+If a square with no adjacent bombs is clicked, all squares with no adjacent bombs are clicked
+The total number of bombs should be displayed
+	Each time a flag is used that number is decreased
+All squares without bombs must be revealed to win

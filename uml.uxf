@@ -1,0 +1,25 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>110</x><y>400</y><w>210</w><h>140</h></coordinates><panel_attributes>_Grid_
+--
+-length: int
+-height: int
+-mines: int
+-lost: bool
+--
++GenerateMines(mines)
++ClickSquare()
++End()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>590</y><w>210</w><h>130</h></coordinates><panel_attributes>_Square_
+--
+-bomb: bool
+-number: int
+-clicked: bool
+-flagged: bool
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>210</y><w>210</w><h>140</h></coordinates><panel_attributes>_Game_
+--
+
+--
++StartGame(length, height, mines)
++EndGame()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>340</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>530</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>110</x><y>10</y><w>210</w><h>140</h></coordinates><panel_attributes>_Minesweeper_
+--
+
+--
++Start()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>140</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element></diagram>
