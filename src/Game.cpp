@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Grid.h"
 #include <iostream>
 
 using namespace gme;
@@ -7,19 +8,7 @@ void game::startGame()
 {
     char choice;
     cout << "Game started" << endl;
-    cout << "Choose which game to play:\nBeginner: b\nIntermediate: i" << endl;
-    cin >> choice;
-    switch (choice)
-    {
-    case 'b':
-        cout << "Beginner game created" << endl;
-        break;
-    case 'i':
-        cout << "Intermediate game created" << endl;
-        break;
-    default:
-        cout << "Please enter a valid choice" << endl;
-    }
+    createGrid();
 }
 
 void game::endGame()
@@ -29,4 +18,5 @@ void game::endGame()
 
 void game::createGrid()
 {
+    Grid(9, 9, 10);
 }
