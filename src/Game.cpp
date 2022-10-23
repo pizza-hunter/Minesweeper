@@ -1,22 +1,27 @@
 #include "Game.h"
-#include "Grid.h"
+#include "Grid.cpp"
 #include <iostream>
 
-using namespace gme;
 using namespace std;
-void game::startGame()
+
+Game::Game(){
+    cout << "Game object created" << endl;
+}
+
+void Game::startGame()
 {
     char choice;
     cout << "Game started" << endl;
     createGrid();
 }
 
-void game::endGame()
+void Game::endGame()
 {
     cout << "Game ended!" << endl;
 }
 
-void game::createGrid()
+void Game::createGrid()
 {
-    Grid(9, 9, 10);
+    Grid _grid = Grid(9,9,10);
+    _grid.printGrid();
 }
