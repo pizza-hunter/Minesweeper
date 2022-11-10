@@ -20,23 +20,37 @@ Grid::Grid(const int height, const int width, const int mines)
 
 void Grid::printGrid()
 {
-    std::cout << "printing grid" << std::endl;
     for (int i = 0; i < size(); i++)
     {
+        if (i % _width == 0)
+        {
+            for (int j = 0; j < _width; j++)
+            {
+                std::cout << "----";
+            }
+            cout << "-" << endl;
+
+            cout << "| ";
+        }
         if (_grid_squares[i]._bomb)
         {
-            std::cout << "*"
-                      << " ";
+            std::cout << "*";
         }
         else
         {
-            std::cout << _grid_squares[i]._number << " ";
+            std::cout << _grid_squares[i]._number;
         }
+        cout << " | ";
         if (i % _width == _width - 1)
         {
             std::cout << std::endl;
         }
     }
+    for (int i = 0; i < _width; i++)
+    {
+        std::cout << "----";
+    }
+    cout << "-";
 }
 
 int Grid::size()
