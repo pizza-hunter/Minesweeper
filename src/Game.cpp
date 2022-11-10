@@ -4,13 +4,18 @@
 
 using namespace std;
 
-Game::Game(){
-    cout << "Game object created" << endl;
+Game::Game() : _grid{9, 9, 9}
+{
+    cout << "Game object created (standard)" << endl;
+}
+Game::Game(const int height, const int width, const int mines)
+    : _grid{height, width, mines}
+{
+    cout << "Game oject created (custom)" << endl;
 }
 
 void Game::startGame()
 {
-    char choice;
     cout << "Game started" << endl;
     createGrid();
 }
@@ -22,6 +27,8 @@ void Game::endGame()
 
 void Game::createGrid()
 {
-    Grid _grid = Grid(9,9,10);
+    _grid.fill();
+    _grid.shuffle();
+    _grid.calculateNumbers();
     _grid.printGrid();
 }

@@ -1,20 +1,22 @@
-#ifndef GRID_H
-#define GRID_H
+#pragma once
 
 #include "Square.h"
 #include <vector>
 class Grid
 {
 private:
-    std::vector<std::vector<int>> _grid_squares;
-    const unsigned int _height;
-    const unsigned int _width;
-    const unsigned int _mines;
+    std::vector<Square> _grid_squares;
+    const int _height;
+    const int _width;
+    const int _mines;
+    bool inBounds(int x, int y);
 
 public:
     Grid();
-    Grid(const unsigned int height, const unsigned int width, const unsigned int mines);
+    Grid(const int height, const int width, const int mines);
     void printGrid();
+    int size();
+    void fill();
+    void shuffle();
+    void calculateNumbers();
 };
-
-#endif

@@ -1,18 +1,14 @@
-#ifndef SQUARE_H
-#define SQUARE_H
-
+#pragma once
 class Square
 {
-
 private:
-    int _number;
-    bool _bomb;
+public:
     bool _clicked;
     bool _flagged;
-public:
+    int _number;
+    bool _bomb;
     Square();
     Square(int number);
     void toggleFlag();
+    void click();
 };
-
-#endif

@@ -1,14 +1,23 @@
 #include "Square.h"
 #include <iostream>
 
-Square::Square(){
-    std::cout << "Square created (default)" << std::endl;
+Square::Square()
+{
 }
-Square::Square(int number = 0){
-    std::cout << "Square created custom" << std::endl;
+Square::Square(int number) : _number(number)
+{
+    _clicked = false;
+    _flagged = false;
+    _bomb = false;
 }
 
-void Square::toggleFlag(){
+void Square::toggleFlag()
+{
     _flagged = !_flagged;
     std::cout << "Flag changed " << _flagged << std::endl;
+}
+
+void Square::click()
+{
+    _clicked = true;
 }
