@@ -18,8 +18,14 @@ Grid::Grid(const int height, const int width, const int mines)
     std::cout << "Creating custom grid " << _height << ", " << _width << ", " << _mines << std::endl;
 };
 
-void Grid::printGrid()
+void Grid::printGrid(bool bombClicked)
 {
+    cout << "  ";
+    for (int j = 0; j < _width; j++)
+    {
+        std::cout << "  " << j << " ";
+    }
+    cout << endl;
     for (int i = 0; i < size(); i++)
     {
         if (i % _width == 0)
@@ -28,13 +34,21 @@ void Grid::printGrid()
             {
                 std::cout << "----";
             }
-            cout << "-" << endl;
+            cout << "---" << endl;
 
-            cout << "| ";
+            cout << i / _width << " | ";
         }
-        if (_grid_squares[i]._bomb)
+        if (bombClicked && _grid_squares[i]._bomb)
         {
-            std::cout << "*";
+            cout << "*";
+        }
+        else if (_grid_squares[i]._flagged)
+        {
+            std::cout << "F";
+        }
+        else if (!_grid_squares[i]._clicked)
+        {
+            cout << " ";
         }
         else
         {
@@ -50,7 +64,7 @@ void Grid::printGrid()
     {
         std::cout << "----";
     }
-    cout << "-";
+    cout << "---";
 }
 
 int Grid::size()
@@ -97,6 +111,11 @@ bool Grid::inBounds(int x, int y)
     return false;
 }
 
+int Grid::gridIndex(int x, int y)
+{
+    return x + y * _height;
+}
+
 /*
     Generates cell numbers for adjacent squares
 */
@@ -120,12 +139,37 @@ void Grid::calculateNumbers()
         {
             if (inBounds(adjacentIndex[j], adjacentIndex[j + 1]))
             {
-                if (_grid_squares[(adjacentIndex[j] + (adjacentIndex[j + 1] * _height))]._bomb)
+                if (_grid_squares[gridIndex(adjacentIndex[j], adjacentIndex[j + 1])]._bomb)
                 {
                     surroundingBombs++;
                 }
             }
         }
         s->_number = surroundingBombs;
+    }
+}
+
+/*
+    Flags square
+*/
+void Grid::flagSquare(int x, int y)
+{
+    _grid_squares[gridIndex(x, y)].toggleFlag();
+}
+
+/*
+    Returns true if square has bomb
+    Returns false and clicks square if square doesn't contain bomb
+*/
+bool Grid::squareHasBomb(int x, int y)
+{
+    if (_grid_squares[gridIndex(x, y)]._bomb)
+    {
+        return true;
+    }
+    else
+    {
+        _grid_squares[gridIndex(x, y)].click();
+        return false;
     }
 }

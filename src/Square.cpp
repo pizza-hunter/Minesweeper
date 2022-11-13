@@ -14,7 +14,6 @@ Square::Square(int number) : _number(number)
 void Square::toggleFlag()
 {
     _flagged = !_flagged;
-    std::cout << "Flag changed " << _flagged << std::endl;
 }
 
 void Square::click()

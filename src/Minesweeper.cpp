@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
 
-    Game g(9, 9, 9);
+    Game g(3, 3, 1);
     g.startGame();
 
     // char play, choice;
