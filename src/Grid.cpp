@@ -17,7 +17,7 @@ Grid::Grid(const int height, const int width, const int mines)
 {
     std::cout << "Creating custom grid " << _height << ", " << _width << ", " << _mines << std::endl;
 };
-
+// TODO - remove bombClicked flag
 void Grid::printGrid(bool bombClicked)
 {
     cout << "  ";
@@ -64,7 +64,7 @@ void Grid::printGrid(bool bombClicked)
     {
         std::cout << "----";
     }
-    cout << "---";
+    cout << "---" << endl;
 }
 
 int Grid::size()
@@ -111,9 +111,21 @@ bool Grid::inBounds(int x, int y)
     return false;
 }
 
-int Grid::gridIndex(int x, int y)
+int Grid::getIndex(int x, int y)
 {
-    return x + y * _height;
+    return x + (y * _width);
+}
+
+int Grid::getIndex(Square *s)
+{
+    for (int i = 0; i < _grid_squares.size(); i++)
+    {
+        if (s == &_grid_squares[i])
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 /*
@@ -126,23 +138,19 @@ void Grid::calculateNumbers()
     {
         Square *s = &_grid_squares[i];
         int surroundingBombs = 0;
-        int x = i % _width;
-        int y = i / _width;
+        int x = getX(i);
+        int y = getY(i);
         if (s->_bomb)
         {
             continue;
         }
+        std::vector<Square *> nearbySquares = adjacentSquares(getIndex(x, y));
 
-        // adjacentindex grouped in twos, loop steps two for x and y values
-        int adjacentIndex[] = {x - 1, y - 1, x, y - 1, x + 1, y - 1, x - 1, y, x + 1, y, x - 1, y + 1, x, y + 1, x + 1, y + 1};
-        for (int j = 0; j < (sizeof(adjacentIndex) / sizeof(*adjacentIndex)); j += 2)
+        for (Square *t : nearbySquares)
         {
-            if (inBounds(adjacentIndex[j], adjacentIndex[j + 1]))
+            if (t->_bomb)
             {
-                if (_grid_squares[gridIndex(adjacentIndex[j], adjacentIndex[j + 1])]._bomb)
-                {
-                    surroundingBombs++;
-                }
+                surroundingBombs++;
             }
         }
         s->_number = surroundingBombs;
@@ -154,22 +162,87 @@ void Grid::calculateNumbers()
 */
 void Grid::flagSquare(int x, int y)
 {
-    _grid_squares[gridIndex(x, y)].toggleFlag();
+    _grid_squares[getIndex(x, y)].toggleFlag();
 }
 
 /*
     Returns true if square has bomb
-    Returns false and clicks square if square doesn't contain bomb
+    Returns false if square doesn't contain bomb
 */
 bool Grid::squareHasBomb(int x, int y)
 {
-    if (_grid_squares[gridIndex(x, y)]._bomb)
+    return _grid_squares[getIndex(x, y)]._bomb;
+}
+
+void Grid::squareIndexes()
+{
+    for (int i = 0; i < _grid_squares.size(); i++)
     {
-        return true;
+        _grid_squares[i]._index = i;
+    }
+}
+
+std::vector<Square *> Grid::adjacentSquares(int index)
+{
+    int x = getX(index);
+    int y = getY(index);
+    int adjacentIndex[] = {x - 1, y - 1, x, y - 1, x + 1, y - 1, x - 1, y, x + 1, y, x - 1, y + 1, x, y + 1, x + 1, y + 1};
+    std::vector<Square *> squares;
+    for (int i = 0; i < (sizeof(adjacentIndex) / sizeof(*adjacentIndex)); i += 2)
+    {
+        int aX = adjacentIndex[i];
+        int aY = adjacentIndex[i + 1];
+        if (inBounds(aX, aY))
+        {
+            Square *s = &_grid_squares[getIndex(aX, aY)];
+            squares.push_back(s);
+        }
+    }
+    return squares;
+}
+
+int Grid::getX(int index)
+{
+    return index % _width;
+}
+int Grid::getY(int index)
+{
+    return index / _width;
+}
+
+void Grid::clickSquare(int x, int y)
+{
+
+    Square *s = &_grid_squares[getIndex(x, y)];
+    if (!s->_flagged)
+    {
+        if (s->_number == 0 && !s->_clicked)
+        {
+            clickNearbySquares(s, x, y);
+        }
+        s->click();
     }
     else
     {
-        _grid_squares[gridIndex(x, y)].click();
-        return false;
+        cout << "Clicked flagged square" << endl;
+    }
+}
+
+void Grid::clickNearbySquares(Square *s, int x, int y)
+{
+    std::vector<Square *> squareQueue = adjacentSquares(getIndex(x, y));
+    for (int i = 0; i < squareQueue.size(); i++)
+    {
+        if (!squareQueue[i]->_clicked)
+        {
+            if (squareQueue[i]->_number == 0)
+            {
+                for (Square *d : adjacentSquares(getIndex(squareQueue[i])))
+                {
+                    squareQueue.push_back(d);
+                }
+            }
+            squareQueue[i]->click();
+        }
     }
 }

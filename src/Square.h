@@ -7,6 +7,7 @@ public:
     bool _flagged;
     int _number;
     bool _bomb;
+    int _index;
     Square();
     Square(int number);
     void toggleFlag();

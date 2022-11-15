@@ -12,8 +12,22 @@ using namespace std;
 int main()
 {
 
-    Game g(3, 3, 1);
+    Game g(5, 5, 5);
     g.startGame();
+    // int w = 5;
+    // int h = 9;
+    // int counter = 0;
+
+    // Grid g(w, h, 1);
+    // for (int i = 0; i < h; i++)
+    // {
+    //     for (int j = 0; j < w; j++)
+    //     {
+    //         cout << "c: " << counter;
+    //         cout << " i: " << g.gridIndex(j, i) << endl;
+    //         counter++;
+    //     }
+    // }
 
     // char play, choice;
     // while (play != 'n')
