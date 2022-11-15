@@ -6,12 +6,10 @@ using namespace std;
 
 Game::Game() : _grid{9, 9, 9}, _mineClicked{false}
 {
-    cout << "Game object created (standard)" << endl;
 }
 Game::Game(const int height, const int width, const int mines)
     : _grid{height, width, mines}, _mineClicked{false}
 {
-    cout << "Game oject created (custom)" << endl;
 }
 
 void Game::startGame()
@@ -36,6 +34,7 @@ void Game::createGrid()
 {
     _grid.fill();
     _grid.shuffle();
+    _grid.squareIndexes();
     _grid.calculateNumbers();
 }
 
@@ -66,5 +65,9 @@ void Game::playerTurn()
     else
     {
         _mineClicked = _grid.squareHasBomb(choiceX, choiceY);
+        if (!_mineClicked)
+        {
+            _grid.clickSquare(choiceX, choiceY);
+        }
     }
 }
